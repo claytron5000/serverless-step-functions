@@ -52,7 +52,7 @@ This is the Serverless Framework plugin for AWS Step Functions.
      - [Catch Failure](#catch-failure)
      - [Choice](#choice)
 
-## Install
+## Install {#install}
 
 Run `npm install` in your Serverless project.
 
@@ -65,7 +65,7 @@ plugins:
   - serverless-step-functions
 ```
 
-## Setup
+## Setup {#Setup}
 
 Specifies your statemachine definition using Amazon States Language in a `definition` statement in serverless.yml. You can use CloudFormation intrinsic functions such as `Ref` and `Fn::GetAtt` to reference Lambda functions, SNS topics, SQS queues and DynamoDB tables declared in the same `serverless.yml`. Since `Ref` returns different things (ARN, ID, resource name, etc.) depending on the type of CloudFormation resource, please refer to [this page](https://theburningmonk.com/cloudformation-ref-and-getatt-cheatsheet/) to see whether you need to use `Ref` or `Fn::GetAtt`.
 
@@ -144,7 +144,7 @@ In the example above, notice that we used `Fn::GetAtt: [hello, Arn]` to get the 
 
 However, if you prefer to work with logical IDs, you can. You can also express the above `Fn::GetAtt` function as `Fn::GetAtt: [HelloLambdaFunction, Arn]`. If you're unfamiliar with the convention the `Serverless` framework uses, then the easiest thing to do is to first run `sls package` then look in the `.serverless` folder for the generated CloudFormation template. Here you can find the logical resource names for the functions you want to reference.
 
-### Adding a custom name for a stateMachine
+### Adding a custom name for a stateMachine {#adding-a-custom-name-for-a-statemachine}
 
 In case you need to interpolate a specific stage or service layer variable as the
 stateMachines name you can add a `name` property to your yaml.
@@ -167,7 +167,7 @@ plugins:
   - serverless-step-functions
 ```
 
-### Adding a custom logical id for a stateMachine
+### Adding a custom logical id for a stateMachine {#adding-a-custom-logical-id-for-a-statemachine}
 
 You can use a custom logical id that is only unique within the stack as opposed to the name that needs to be unique globally. This can make referencing the state machine easier/simpler because you don't have to duplicate the interpolation logic everywhere you reference the state machine.
 
@@ -192,7 +192,7 @@ plugins:
 
 You can then `Ref: SendMessageStateMachine` in various parts of CloudFormation or serverless.yml
 
-### Depending on another logical id
+### Depending on another logical id {#depending-on-another-logical-id}
 
 If your state machine depends on another resource defined in your `serverless.yml` then you can add a `dependsOn` field to the state machine `definition`. This would add the `DependsOn`clause to the generated CloudFormation template.
 
@@ -210,7 +210,7 @@ stepFunctions:
         - myStream
 ```
 
-### CloudWatch Alarms
+### CloudWatch Alarms {#cloudwatch-alarms}
 
 It's common practice to want to monitor the health of your state machines and be alerted when something goes wrong. You can either:
 
@@ -278,7 +278,7 @@ alarms:
   treatMissingData: ignore # default
 ```
 
-### CloudWatch Notifications
+### CloudWatch Notifications {#cloudwatch-notifications}
 
 You can monitor the execution state of your state machines [via CloudWatch Events](https://aws.amazon.com/about-aws/whats-new/2019/05/aws-step-functions-adds-support-for-workflow-execution-events/). It allows you to be alerted when the status of your state machine changes to `ABORTED`, `FAILED`, `RUNNING`, `SUCCEEDED` or `TIMED_OUT`.
 
@@ -318,7 +318,7 @@ CloudFormation intrinsic functions such as `Ref` and `Fn::GetAtt` are supported.
 
 When setting up a notification target against a FIFO SQS queue, the queue must enable the content-based deduplication option and you must configure the `messageGroupId`.
 
-## Current Gotcha
+## Current Gotcha {#current-gotcha}
 
 Please keep this gotcha in mind if you want to reference the `name` from the `resources` section. To generate Logical ID for CloudFormation, the plugin transforms the specified name in serverless.yml based on the following scheme.
 
@@ -344,7 +344,7 @@ resources:
         Ref: MyStateMachineDash${self:service}Dash${opt:stage}
 ```
 
-## Events
+## Events {#events}
 
 ### API Gateway
 
